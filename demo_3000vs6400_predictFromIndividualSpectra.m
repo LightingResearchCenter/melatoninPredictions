@@ -1,5 +1,7 @@
 function demo_3000vs6400_predictFromIndividualSpectra()
 
+    % Predicts the melatonin suppression for the goggle study
+
     % Petteri Teikari, 2013, LRC, Troy, NY, USA
     % teikap@rpi.edu
     close all    
@@ -12,12 +14,8 @@ function demo_3000vs6400_predictFromIndividualSpectra()
         pathF = mfilename('fullpath');
         path.mainCode = strrep(pathF, mFilename, '');
 
-        path.photoreception = path.mainCode;
-        path.dataOut        = fullfile(path.mainCode, 'dataOut');
-        path.dataIn         = fullfile(path.mainCode, 'dataIn'); 
-        path.photoreception = fullfile(path.mainCode, 'photoreception');
-        path.nomogram       = fullfile(path.mainCode, 'nomogram');
-        path.templates      = fullfile(path.mainCode, 'templates');
+        % FOLDERS
+        path = initFolders();  
             
          % Styling
         style.fontName = 'latin modern roman';
@@ -148,7 +146,7 @@ function demo_3000vs6400_predictFromIndividualSpectra()
                 
                 luxCalc = 683 * trapz(vLambda .* irradIN);
                 ratioLux = illuminanceTARGET / luxCalc;
-                irradOUT = irradIN * ratioLux;
+                irradOUT = irradIN * ratioLux
                 
                 luxCalcCheckUp =  683 * trapz(vLambda .* irradOUT);
                 disp(['i=', num2str(i), ', j=', num2str(j), ', target=', num2str(illuminanceTARGET), ', luxCalc=', num2str(luxCalc), ', ratio=', num2str(ratioLux), ', check=', num2str(luxCalcCheckUp)])
@@ -321,8 +319,8 @@ function demo_3000vs6400_predictFromIndividualSpectra()
         if style.imgOutautoSavePlot == 1
             fileNameOut = ['melPred_PolyChrom_3000K_vs_6400K_withTape_w_PupilMeasAsIlluminanceCorrection', '.png'];
             try
-                export_fig(fullfile(path.dataOut, fileNameOut), style.imgOutRes, style.imgOutAntiAlias)                
-            catch
+                export_fig(fullfile(path.figuresOut, fileNameOut), style.imgOutRes, style.imgOutAntiAlias)                
+            catch err
                 err
                 warning('%s\n%s\n%s\n%s', err.identifier, 'Figure not saved most likely because you have not installed export_fig from Matlab File Exchange!', ...
                       'Download it from: http://www.mathworks.com/matlabcentral/fileexchange/23629-exportfig, and "File -> Set Path -> Add Folder"', ...
@@ -332,10 +330,11 @@ function demo_3000vs6400_predictFromIndividualSpectra()
         
         % autosave the figure [SVG]        
         if style.imgOutautoSavePlot == 1
-            fileNameOut = ['melPred_PolyChrom_3000K_vs_6400K_withTape', '.svg'];
+            fileNameOut = ['melPred_PolyChrom_3000K_vs_6400K_withTape_w_PupilMeasAsIlluminanceCorrection', '.svg'];
             try
-                plot2svg((fullfile(path.dataOut, fileNameOut)))                
+                plot2svg((fullfile(path.figuresOut, fileNameOut)))                
             catch err
+                err
                 warning('%s\n%s\n%s\n%s', err.identifier, 'Figure not saved most likely because you have not installed plot2svg from Matlab File Exchange!', ...
                       'Download it from: https://www.mathworks.com/matlabcentral/fileexchange/7401-scalable-vector-graphics-svg-export-of-figures, and "File -> Set Path -> Add Folder"', ...
                       '"Home" -> "Environment" -> "Set Path" in Matlab2012b and newer with the updated GUI')   
