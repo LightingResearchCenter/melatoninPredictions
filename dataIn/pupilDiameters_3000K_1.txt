@@ -1,0 +1,7 @@
+Pupil Diameters
+2700 K (3000 K)
+Condition [lux]	Diameter [mm]
+0	6.24
+60	7.01
+200	6.91
+720	6.49
